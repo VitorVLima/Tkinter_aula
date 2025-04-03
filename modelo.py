@@ -44,11 +44,52 @@ class AppBd():
             if self.connect:
                 cursor.close()
                 self.fecharconexao()
-            
-    def atualizardados(self, name, price):
-        self.abrirconexao()
-        update_query = f"UPDATE products SET name = {name}, price = {price} WHERE ?"
+
+    def select_all_products(self):
+        self.abrirconexao() 
+        select_query = """SELECT * FROM products """
+        products = []
         try:
             cursor = self.connect.cursor()
+            cursor.execute(select_query)
+            products = cursor.fetchall()
+        except sqlite3.Error as erro:
+             print(f"falha ao listar os dados{erro}")
+        finally:
+            if self.connect:
+                cursor.close()
+                self.fecharconexao()
+            return self.products
+            
+            
+    def atualizar_produto(self, name, price, id):
+        self.abrirconexao()
+        update_query = f"UPDATE products SET name = ?, price = ? WHERE id = ?"
+        try:
+            cursor = self.connect.cursor()
+            cursor.execute(update_query,{name, proce, id})
+            self.connect.commit()
+            print("Produto foi atualizado com sucesso")
+        except sqlite3.Error as erro:
+            print(f"falha ao atualizar dados {erro}")
+        finally:
+            if self.connect:
+                cursor.close()
+                self.fecharconexao()
+
+    def deletar_produto():
+        self.abrirconexao()
+        delete_query = f"DELETE FROM products WHERE id = ?"
+         try:
+            cursor = self.connect.cursor()
+            cursor.execute(update_query,{name, proce, id})
+            self.connect.commit()
+            print("Produto deletado com sucesso")
+        except sqlite3.Error as erro:
+            print(f"falha ao atualizar dados {erro}")
+        finally:
+            if self.connect:
+                cursor.close()
+                self.fecharconexao()
 
         
