@@ -77,16 +77,16 @@ class AppBd():
                 cursor.close()
                 self.fecharconexao()
 
-    def deletar_produto():
+    def deletar_produto(self, id):
         self.abrirconexao()
         delete_query = f"DELETE FROM products WHERE id = ?"
          try:
             cursor = self.connect.cursor()
-            cursor.execute(update_query,{name, proce, id})
+            cursor.execute(delete_query, id)
             self.connect.commit()
             print("Produto deletado com sucesso")
         except sqlite3.Error as erro:
-            print(f"falha ao atualizar dados {erro}")
+            print(f"falha a deletar produto {erro}")
         finally:
             if self.connect:
                 cursor.close()
