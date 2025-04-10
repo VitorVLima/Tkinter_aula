@@ -43,7 +43,7 @@ class AppBd():
             self.connect.commit()
             print("Produto foi cadastrado com sucesso")
         except sqlite3.Error as erro:
-             print(f"falha ao criar a tabela {erro}")
+             print(f"falha ao inserir dado {erro}")
         finally:
             if self.connect:
                 cursor.close()

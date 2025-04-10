@@ -27,7 +27,7 @@ class PrincipalBD():
         self.entry_preco = tk.Entry(self.janela)
         self.entry_preco.pack()
 
-        self.btn_cadastrar = tk.Button(self.janela, text='Cadastrar')
+        self.btn_cadastrar = tk.Button(self.janela, text='Cadastrar', command= self.cadastrarProduto)
         self.btn_cadastrar.pack()
 
         self.btn_deletar = tk.Button(self.janela, text='Deletar')
@@ -38,6 +38,11 @@ class PrincipalBD():
 
 
         win.configure(background='pink')
+
+    def cadastrarProduto(self):
+        nome = self.entry_nome.get()
+        preco = float(self.entry_preco.get())
+        self.appBd.inserirdados(nome, preco)
 
 janela = tk.Tk()
 PrincipalBD(janela)
