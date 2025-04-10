@@ -1,6 +1,10 @@
 import sqlite3
 
 class AppBd():
+    def __init__(self):
+        self.create_table()
+
+
     def abrirconexao(self):
         try:
             self.connect = sqlite3.connect("database.db")
@@ -16,7 +20,7 @@ class AppBd():
 
     def create_table(self):
         create_table_query = """CREATE TABLE IF NOT EXISTS products(id INTEGER PRIMARY KEY,
-                                                                    name TEXT NOT NULL
+                                                                    name TEXT NOT NULL,
                                                                     price REAL NOT NULL)"""
         self.abrirconexao()                    
         try:                                                
@@ -80,7 +84,7 @@ class AppBd():
     def deletar_produto(self, id):
         self.abrirconexao()
         delete_query = f"DELETE FROM products WHERE id = ?"
-         try:
+        try:
             cursor = self.connect.cursor()
             cursor.execute(delete_query, id)
             self.connect.commit()
