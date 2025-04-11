@@ -39,7 +39,7 @@ class AppBd():
         insert_query = """INSERT INTO products (name, price) VALUES (?, ?)"""
         try:
             cursor = self.connect.cursor()
-            cursor.execute(insert_query, {name, price})
+            cursor.execute(insert_query, (name, price))
             self.connect.commit()
             print("Produto foi cadastrado com sucesso")
         except sqlite3.Error as erro:
@@ -63,7 +63,7 @@ class AppBd():
             if self.connect:
                 cursor.close()
                 self.fecharconexao()
-            return self.products
+            return products
             
             
     def atualizar_produto(self, name, price, id):
@@ -71,7 +71,7 @@ class AppBd():
         update_query = f"UPDATE products SET name = ?, price = ? WHERE id = ?"
         try:
             cursor = self.connect.cursor()
-            cursor.execute(update_query,{name, proce, id})
+            cursor.execute(update_query,(name, price, id))
             self.connect.commit()
             print("Produto foi atualizado com sucesso")
         except sqlite3.Error as erro:
@@ -96,4 +96,18 @@ class AppBd():
                 cursor.close()
                 self.fecharconexao()
 
+    def fazer_busca(self, nome):
+        self.abrirconexao()
+        busca_query = f"SELECT * FROM products WHERE name LIKE ? ORDER BY name ASC"
+        nomesBuscados = []
+        try:
+            cursor = self.connect.cursor()
+            cursor.execute(busca_query, (nome,))
+            nomesBuscados = cursor.fetchall()
+        except Exception as e:
+            print("Não foi possível fazer a busca, " + str(e))
+
+        finally:
+            self.fecharconexao()
+            return nomesBuscados
         
